@@ -1,0 +1,135 @@
+@font-face {
+  font-family: 'Liberation';
+  src: url(../fonts/liberation-sans.woff2), url(../fonts/liberation-sans.woff);
+}
+
+* {
+  margin: auto;
+}
+
+body {
+  background-color: white;
+  margin: 0px;
+  padding: 0px;
+}
+
+div {
+  display: block;
+}
+
+p {
+  margin: 10px auto;
+  text-align: center;
+  font-family: 'Liberation';
+  font-size: 18px;
+}
+
+.centralizer {
+  margin: 0 auto;
+}
+
+.title {
+  font-family: 'Liberation';
+  font-size: 32px;
+  letter-spacing: 0.06em;
+  color: #218b83;
+}
+
+.textarea {
+  display: block;
+  width: 715px;
+  height: 200px;
+  margin: 10px auto 10px;
+  padding: 10px;
+  font-size: 18px;
+  color: #444444;
+  font-family: 'Liberation';
+}
+
+.keyboard {
+  width: 704px;
+  margin: 0 auto;
+  padding: 5px;
+  padding-left: 0;
+  padding-bottom: 0;
+  background: #c9c8c8;
+  border: 3px solid #218b83;
+  border-radius: 5px;
+  color: #104e4a;
+}
+
+.keyboard .row {
+  clear: both;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.keyboard .key {
+  float: left;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  margin-left: 6px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #ffffff;
+  background: #525252;
+  border-radius: 3px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-transition: border-radius 0.8s, background-color 0.8s;
+  transition: border-radius 0.8s, background-color 0.8s;
+  font-family: 'Liberation';
+}
+
+.keyboard .AltLeft, .keyboard .AltRight, .keyboard .Win, .keyboard .ArrowUp,
+.keyboard .ArrowLeft, .keyboard .ArrowDown, .keyboard .ArrowRight,
+.keyboard .ControlLeft, .keyboard .ControlRight {
+  background: #313131;
+}
+
+.keyboard .Backspace, .keyboard .CapsLock, .keyboard .ShiftLeft {
+  width: 100px;
+  background-color: #313131;
+}
+
+.keyboard .Delete {
+  width: 44px;
+  background-color: #313131;
+}
+
+.keyboard .Tab {
+  width: 50px;
+  background-color: #313131;
+}
+
+.keyboard .Enter, .keyboard .ShiftRight {
+  width: 86px;
+  background-color: #313131;
+}
+
+.keyboard .Space {
+  width: 330px;
+}
+
+.keyboard .key:hover {
+  background: darkgray;
+}
+
+.keyboard .key.active {
+  background-color: #ffffff;
+  border-radius: 50px;
+}
+
+.keyboard .key.active span {
+  color: #444444;
+}
+
+.hidden {
+  display: none;
+}
+/*# sourceMappingURL=style.css.map */
