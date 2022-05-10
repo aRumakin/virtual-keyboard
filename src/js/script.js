@@ -177,11 +177,11 @@ class Keyboard {
       }
     });
 
-    if (key === 'Enter') return '\n';
-    if (key === 'Space') return ' ';
-    if (key === 'Tab') return '    ';
+    if (curElContent === 'Enter') return '\n';
+    if (curElContent === 'Space') return ' ';
+    if (curElContent === 'Tab') return '    ';
     
-    if (!curElContent) return '';
+    if (this.specialKeys.includes(curElContent)) return '';
     if (this.state.CapsLock && this.state.Shift) {
       return curElContent.toLowerCase();
     }
