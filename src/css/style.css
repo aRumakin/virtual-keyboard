@@ -81,8 +81,8 @@ p {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-transition: border-radius 0.8s, background-color 0.8s;
-  transition: border-radius 0.8s, background-color 0.8s;
+  -webkit-transition: border-radius 0.5s, background-color 0.5s;
+  transition: border-radius 0.5s, background-color 0.5s;
   font-family: 'Liberation';
 }
 
