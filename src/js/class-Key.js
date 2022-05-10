@@ -32,7 +32,7 @@ export class Key {
       caseUpEl.textContent = this[el].up;
 
       const capsEl = document.createElement('span');
-      capsEl.classList.add('caps');
+      capsEl.classList.add('capsOn');
       capsEl.textContent = this[el].low.match(/A-za-zА-Яа-я/) ? this[el].up : this[el].low;
 
       const shiftCapsEl = document.createElement('span');
