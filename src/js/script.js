@@ -4,7 +4,7 @@ import {Key} from './class-Key.js';
 class Keyboard {
   constructor(keysArray) {
     this.keys = keysArray;
-    this.specialKeys = ['Backspace', 'Tab', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight', 'ControlLeft',
+    this.specialKeys = ['Backspace', 'Tab', 'CapsLock', 'Enter', 'Shift', 'Win',
       'Alt', 'Space', 'Ctrl', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Delete'];
     this.textarea = '';
     this.state = {
@@ -166,13 +166,15 @@ class Keyboard {
     } else {
       [,, currKeyClass] = event.currentTarget.classList;
     }
-    this.current.element.classList.remove('active');
+    const activeEls = document.querySelectorAll('.active');
+    activeEls.forEach((el) => el.classList.remove('active'));
     
     this.pressed.delete(currKeyClass);
     const currentKey = document.querySelector(`.${currKeyClass}`);
     if (!currentKey) return;
-    if (currentKey === 'ShiftRight' || currentKey === 'ShiftLeft') {
+    if (currKeyClass === 'ShiftRight' || currKeyClass === 'ShiftLeft') {
       this.state.Shift = false;
+      this.showCurrentLayer();
     }
     this.textarea.focus();
   }
