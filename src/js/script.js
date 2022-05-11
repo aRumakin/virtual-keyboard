@@ -5,7 +5,7 @@ class Keyboard {
   constructor(keysArray) {
     this.keys = keysArray;
     this.specialKeys = ['Backspace', 'Tab', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight', 'ControlLeft',
-      'AltLeft', 'Space', 'ControlRight', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Delete'];
+      'Alt', 'Space', 'Ctrl', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Delete'];
     this.textarea = '';
     this.state = {
       CapsLock: false,
@@ -65,27 +65,31 @@ class Keyboard {
     this.textarea = textAreaEl;
     document.addEventListener('keydown', (e) => {
       e.preventDefault();
-      this.buttonOnClick(e.code);
+      this.buttonOnClick(e);
     });
     document.addEventListener('keyup', (e) => {
       e.preventDefault();
-      this.buttonUnClick(e.code);
+      this.buttonUnClick(e);
     });
     this.textarea.focus();
     this.showCurrentLayer();
   }
 
   buttonOnClick(event) {
-    event.preventDefault();
-    const [,,currKeyClass] = event.currentTarget.classList;
-    
-    this.current.element = event.currentTarget;
+    let currKeyClass;
+    if (event instanceof KeyboardEvent) {
+      currKeyClass = event.code;
+      this.current.element = document.querySelector(`.${currKeyClass}`);
+    } else {
+      [,, currKeyClass] = event.currentTarget.classList;
+      this.current.element = event.currentTarget;
+    }
     this.pressed.add(currKeyClass);
     if (this.pressed.has('ControlLeft') && this.pressed.has('AltLeft')) this.switchLanguage();
     const currentKey = document.querySelector(`.${currKeyClass}`);
     if (!currentKey) return;
-    event.currentTarget.classList.add('active');
-
+    currentKey.classList.add('active');
+ 
     this.textarea.focus();
 
     const textAreaStart = this.textarea.selectionStart;
@@ -95,7 +99,6 @@ class Keyboard {
 
     if (currKeyClass === 'CapsLock') {
       this.state.CapsLock = !this.state.CapsLock;
-      console.log(this.state.CapsLock);
       currentKey.classList.toggle('caps_on');
       this.showCurrentLayer();
       return;
@@ -123,13 +126,13 @@ class Keyboard {
       return;
     }
     if (currKeyClass === 'ArrowUp') {
-      this.currentCursorPos = this.currentCursorPos - 42 > 0 ? this.currentCursorPos - 42 : 0;
+      this.currentCursorPos = this.currentCursorPos - 55 > 0 ? this.currentCursorPos - 55 : 0;
       this.textarea.setSelectionRange(this.currentCursorPos, this.currentCursorPos);
       return;
     } 
     if (currKeyClass === 'ArrowDown') {
-      this.currentCursorPos = this.currentCursorPos + 42 < this.textarea.value.length
-        ? this.currentCursorPos + 42
+      this.currentCursorPos = this.currentCursorPos + 55 < this.textarea.value.length
+        ? this.currentCursorPos + 55
         : this.textarea.value.length;
       this.textarea.setSelectionRange(this.currentCursorPos, this.currentCursorPos);
       return;
@@ -157,9 +160,14 @@ class Keyboard {
   }
 
   buttonUnClick(event) {
-    event.preventDefault();
+    let currKeyClass;
+    if (event instanceof KeyboardEvent) {
+      currKeyClass = event.code;
+    } else {
+      [,, currKeyClass] = event.currentTarget.classList;
+    }
     this.current.element.classList.remove('active');
-    const [,,currKeyClass] = event.currentTarget.classList;
+    
     this.pressed.delete(currKeyClass);
     const currentKey = document.querySelector(`.${currKeyClass}`);
     if (!currentKey) return;
@@ -183,7 +191,7 @@ class Keyboard {
     
     if (this.specialKeys.includes(curElContent)) return '';
     if (this.state.CapsLock && this.state.Shift) {
-      return curElContent.toLowerCase();
+      return curElContent;
     }
     if (this.state.CapsLock) return curElContent.toUpperCase();
     if (this.state.Shift) return curElContent;
@@ -193,9 +201,14 @@ class Keyboard {
   showCurrentLayer() {
     const rusKeys = document.querySelectorAll('.rus');
     const engKeys = document.querySelectorAll('.eng');
-    this.state.lang === 'eng'
-      ? rusKeys.forEach((el) => el.classList.add('hidden'))
-      : engKeys.forEach((el) => el.classList.remove('hidden'));
+    console.log(this.state.lang);
+    if (this.state.lang === 'eng') {
+      rusKeys.forEach((el) => el.classList.add('hidden'));
+      engKeys.forEach((el) => el.classList.remove('hidden'));
+    } else {
+      rusKeys.forEach((el) => el.classList.remove('hidden'));
+      engKeys.forEach((el) => el.classList.add('hidden'));
+    }
 
     localStorage.setItem('lang', this.state.lang);
 
@@ -229,7 +242,8 @@ class Keyboard {
   }
 
   switchLanguage() {
-    this.state.lang = 'eng' ? 'rus' : 'eng';
+    this.state.lang = this.state.lang  === 'eng' ? 'rus' : 'eng';
+    localStorage.setItem('lang', this.state.lang);
     this.showCurrentLayer();
   }
 }
